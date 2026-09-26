@@ -99,7 +99,18 @@
     File \"~A/~(~A~).lisp\"
     Koan \"~A\"
     Current koan assert status is \"~A\"~%~%"
-            (koan-status-message koan-status) dirname filename koan-name koan-status)))
+            ;;(koan-status-message koan-status) dirname filename koan-name koan-status)))
+            (koan-status-message koan-status) dirname filename koan-name
+            (mapcar (lambda (x)
+              (concatenate 'string
+                (case x
+                  (:pass "[32m")
+                  (:error "[31m")
+                  (:fail "[31m")
+                  (:incomplete "[33m")
+                )
+                (string x) "[0m")) koan-status)
+            )))
 
 (defun print-completion-message ()
   (format t "
